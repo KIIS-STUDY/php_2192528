@@ -28,7 +28,8 @@ else
 try
 {
 
-$staff_code=$_GET['staffcode'];
+$pro_code = $_POST['code'];
+$pro_gazou_name = $_POST['gazou_name'];
 
 $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
 $user = 'root';
@@ -36,15 +37,17 @@ $password = '';
 $dbh = new PDO($dsn,$user,$password);
 $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
-$sql = 'SELECT name FROM mst_staff WHERE code=?';
+$sql = 'DELETE FROM mst_product WHERE code=?';
 $stmt = $dbh->prepare($sql);
-$data[]=$staff_code;
+$data[] = $pro_code;
 $stmt->execute($data);
 
-$rec = $stmt->fetch(PDO::FETCH_ASSOC);
-$staff_name=$rec['name'];
-
 $dbh = null;
+
+if($pro_gazou_name!='')
+{
+    unlink('./gazou/'.$pro_gazou_name);
+}
 
 }
 catch(Exception $e)
@@ -55,21 +58,33 @@ catch(Exception $e)
 
 ?>
 
-スタッフ削除<br/>
+削除しました。<br/>
 <br/>
-スタッフコード<br/>
-<?php print $staff_code;?>
-<br/>
-スタッフ名<br/>
-<?php print $staff_name;?>
-<br/>
-このスタッフを削除してよろしいですか?<br/>
-<br/>
-<form method="post"action="staff_delete_done.php">
-<input type="hidden" name="code" value="<?php print $staff_code;?>">
-<input type="button"onclick="history.back()"value="戻る">
-<input type="submit"value="OK">
-</form>
+<a href="pro_list.php">戻る</a>
 
 </body>
-</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
