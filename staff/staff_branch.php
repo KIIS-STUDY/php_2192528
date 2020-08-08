@@ -9,7 +9,7 @@ if(isset($_SESSION['login'])==false)
     exit();
 }
 
-<?php
+
 
 if(isset($_POST['disp'])==true)
 {
